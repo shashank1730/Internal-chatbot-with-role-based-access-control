@@ -1,0 +1,10 @@
+langchain_core
+langchain_community
+python_dotenv
+streamlit
+langserve
+fastapi
+uvicorn
+pypdf
+faiss-cpu
+langchain-groq
