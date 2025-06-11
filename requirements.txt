@@ -8,3 +8,7 @@ uvicorn
 pypdf
 faiss-cpu
 langchain-groq
+unstructured
+unstructured[md]
+libmagic
+langchain_ollama

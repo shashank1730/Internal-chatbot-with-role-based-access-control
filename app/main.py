@@ -31,7 +31,7 @@ def authenticate(credentials: HTTPBasicCredentials = Depends(security)):
 # Login endpoint
 @app.get("/login")
 def login(user=Depends(authenticate)):
-    return {"message": f"Welcome {user['username']}!", "role": user["role"]}
+    return {"user": user['username'], "role": user["role"]}
 
 
 # Protected test endpoint
