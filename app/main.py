@@ -1,7 +1,12 @@
 from typing import Dict
+from pydantic import BaseModel
 
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
+import streamlit as st
+import requests
+from app.services.rag_engine import get_rag_response
+
         
 
 app = FastAPI()
@@ -40,7 +45,16 @@ def test(user=Depends(authenticate)):
     return {"message": f"Hello {user['username']}! You can now chat.", "role": user["role"]}
 
 
-# Protected chat endpoint
+
+
+# Payload for chat
+class ChatPayload(BaseModel):
+    message: str
+    role: str
+
+# Chat endpoint
 @app.post("/chat")
-def query(user=Depends(authenticate), message: str = "Hello"):
-    return "Implement this endpoint."
+def chat(payload: ChatPayload, user=Depends(authenticate)):
+    print(f"[INFO] Authenticated user: {user['username']} | Role: {payload.role}")
+    answer = get_rag_response(payload.message, payload.role)
+    return {"response": answer}

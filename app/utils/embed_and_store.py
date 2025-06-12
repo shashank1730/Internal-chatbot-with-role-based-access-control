@@ -19,11 +19,11 @@ def build_db():
             print(f"Added metadata to {len(docs)} docs for role: {role}")
             print(docs[0].metadata) 
         all_docs.extend(docs)
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size = 1000, chunk_overlap = 200)
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size = 300, chunk_overlap = 100)
     documents = text_splitter.split_documents(all_docs)
 
     db = Chroma.from_documents(documents[:], 
-                               OllamaEmbeddings(model="nomic-embed-text"), 
+                               OllamaEmbeddings(), 
                                persist_directory="vectorstore",
                                collection_name="enterprise_docs")
     db.persist()

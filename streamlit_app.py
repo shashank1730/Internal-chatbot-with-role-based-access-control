@@ -13,7 +13,11 @@ if "user" not in st.session_state:
             auth=(username, password)
         )
         if res.status_code == 200:
-            st.session_state.user = res.json()  # store role/info
+            st.session_state.user = {
+            "user": username,
+            "password": password,  # ✅ storing password for later API use
+            "role": res.json()["role"]
+        }
             st.success("Login successful!")
             st.switch_page("pages/chat_bot.py")  # ✅ This works if pages/chat_bot.py exists
         else:
