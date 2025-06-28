@@ -5,24 +5,35 @@ import requests
 
 
 def response(input_text):
-    res = requests.post(
-        "http://localhost:8000/chat",
-        json={
-            "message": input_text,
-            "role": st.session_state.user["role"]
-        },
-        auth=(
-            st.session_state.user["user"],
-            st.session_state.user["password"]
+    try:
+        res = requests.post(
+            "http://localhost:8000/chat",
+            json={
+                "message": input_text,
+                "role": st.session_state.user["role"]
+            },
+            auth=(
+                st.session_state.user["user"],
+                st.session_state.user["password"]
+            )
         )
-    )
 
-    print("DEBUG:", res.status_code, res.text)
+        print("DEBUG:", res.status_code, res.text)
+        res.raise_for_status()  # This will raise if status != 200
 
-    if res.status_code == 200:
-        return res.json()["response"]
-    else:
-        return "❌ Error: " + res.text
+        return res.json()  # ✅ This is what your backend returns: a dict
+    except requests.exceptions.RequestException as e:
+        print("❌ Request failed:", str(e))
+        return {
+            "response": f"❌ Server error: {str(e)}",
+            "sources": []
+        }
+    except Exception as e:
+        print("❌ Unexpected error:", str(e))
+        return {
+            "response": f"❌ Unknown error: {str(e)}",
+            "sources": []
+        }
 
 
 
@@ -35,7 +46,19 @@ if "user" in st.session_state:
     if user_question:
         with st.spinner("Thinking..."):
             answer = response(user_question)
-            st.chat_message("assistant").write(answer)
+            st.chat_message("assistant").write(answer["response"])
+
+
+
+            
+            if answer.get("sources"):  # avoid crash if sources is missing
+                shown = set()
+                st.markdown("#### 🗂️ Files used:")
+                for doc in answer["sources"]:
+                    key = (doc["file_name"], doc["link"])
+                    if key not in shown:
+                        shown.add(key)
+                        st.markdown(f"📄 [{doc['file_name']}]({doc['link']})", unsafe_allow_html=True)
 # ...existing code...
 else:
     st.title("Welcome to the Chat Bot Page")

@@ -12,3 +12,7 @@ unstructured
 unstructured[md]
 libmagic
 langchain_ollama
+langchain_experimental
+tabulate
+einops
+sentence-transformers

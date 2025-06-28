@@ -3,14 +3,15 @@ from pydantic import BaseModel
 
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
-import streamlit as st
 import requests
 from app.services.rag_engine import get_rag_response
+from fastapi.staticfiles import StaticFiles
 
         
 
 app = FastAPI()
 security = HTTPBasic()
+app.mount("/files", StaticFiles(directory="resources/data"), name="files")
 
 # Dummy user database
 users_db: Dict[str, Dict[str, str]] = {
@@ -19,7 +20,8 @@ users_db: Dict[str, Dict[str, str]] = {
     "Sam": {"password": "financepass", "role": "finance"},
     "Peter": {"password": "pete123", "role": "engineering"},
     "Sid": {"password": "sidpass123", "role": "marketing"},
-    "Natasha": {"password": "hrpass123", "role": "hr"}
+    "Natasha": {"password": "hrpass123", "role": "hr"},
+    "Shashank":{"password":"password123", "role" : "C-Level Executives"}
 }
 
 
@@ -56,5 +58,5 @@ class ChatPayload(BaseModel):
 @app.post("/chat")
 def chat(payload: ChatPayload, user=Depends(authenticate)):
     print(f"[INFO] Authenticated user: {user['username']} | Role: {payload.role}")
-    answer = get_rag_response(payload.message, payload.role)
-    return {"response": answer}
+    answer, sources = get_rag_response(payload.message, payload.role)
+    return {"response": answer, "sources" : sources}

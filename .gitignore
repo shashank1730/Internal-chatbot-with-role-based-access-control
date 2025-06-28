@@ -15,3 +15,9 @@ resources/vectorstore
 
 #Folders
 app/utils/vectorstore
+
+app/resources/vectorstore
+
+models
+
+test-csv-data.ipynb
