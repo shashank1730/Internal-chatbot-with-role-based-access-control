@@ -38,6 +38,8 @@ def response(input_text):
 
 
     
+if "chat_history" not in st.session_state:
+    st.session_state.chat_history = []
 
 
 if "user" in st.session_state:
@@ -46,19 +48,27 @@ if "user" in st.session_state:
     if user_question:
         with st.spinner("Thinking..."):
             answer = response(user_question)
-            st.chat_message("assistant").write(answer["response"])
+            st.session_state.chat_history.append(("user", user_question))
+            st.session_state.chat_history.append(("assistant", answer["response"], answer.get("sources", [])))
+            for entry in st.session_state.chat_history:
+                sender = entry[0]
+                if sender == "user":
+                    with st.chat_message("user"):
+                        st.markdown(entry[1])
+                elif sender == "assistant":
+                    response_text, sources = entry[1], entry[2]
+                    with st.chat_message("assistant"):
+                        st.markdown(response_text)
+                        if sources:
+                            shown = set()
+                            st.markdown("#### 🗂️ Files used:")
+                            for doc in sources:
+                                key = (doc["file_name"], doc["link"])
+                                if key not in shown:
+                                    shown.add(key)
+                                    st.markdown(f"📄 [{doc['file_name']}]({doc['link']})", unsafe_allow_html=True)
 
 
-
-            
-            if answer.get("sources"):  # avoid crash if sources is missing
-                shown = set()
-                st.markdown("#### 🗂️ Files used:")
-                for doc in answer["sources"]:
-                    key = (doc["file_name"], doc["link"])
-                    if key not in shown:
-                        shown.add(key)
-                        st.markdown(f"📄 [{doc['file_name']}]({doc['link']})", unsafe_allow_html=True)
 # ...existing code...
 else:
     st.title("Welcome to the Chat Bot Page")

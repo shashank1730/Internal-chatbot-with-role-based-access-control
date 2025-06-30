@@ -16,3 +16,5 @@ langchain_experimental
 tabulate
 einops
 sentence-transformers
+langchain_experimental
+chromadb
