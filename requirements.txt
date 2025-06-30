@@ -18,3 +18,4 @@ einops
 sentence-transformers
 langchain_experimental
 chromadb
+streamlit_chat
