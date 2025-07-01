@@ -108,22 +108,25 @@ And yes, it always shows you _where_ it pulled the answer from.
 
 ## 🛠️ How to Run It
 
-`````bash
+```bash
 # run the requirements.txt
 pip install -r requirements.txt
+```
 
-````bash
+```bash
 # Storing the Vector DB (Run this once) -- Embeds all files into the vector store
 python app/utils/embed_and_store.py
+```
 
-````bash
+```bash
 # Backend
 uvicorn app.main:app --reload
+```
 
-````bash
+```bash
 # Frontend
 streamlit run Streamlit_app.py
-`````
+```
 
 `.env` files are respected. HuggingFace keys and vector DB dirs are secure and never pushed.
 
