@@ -109,6 +109,7 @@ And yes, it always shows you _where_ it pulled the answer from.
 ## 🛠️ How to Run It
 
 ````bash
+```bash
 # run the requirements.txt
 pip install -r requirements.txt
 
