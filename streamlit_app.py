@@ -16,10 +16,11 @@ st.markdown("""
     }
 
     .login-box {
-        background-color: #1e293b;
+        background-color: #343a40;
         padding: 2.5rem 2rem;
         border-radius: 18px;
-        box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        color: #f8f9fa;
         text-align: center;
     }
 
@@ -64,9 +65,11 @@ st.markdown("""
 # -- Login Form --
 with st.container():
     st.markdown("""<div class="login-box">
-                <h1>FinSolve RAG Assistant</h1>
+                <h1>FinSolve VaultRAG Assistant</h1>
                 <p>Secure login to access your internal AI chatbot.</p>""", unsafe_allow_html=True)
-    st.markdown('<p>Secure login to access your internal AI chatbot.</p>', unsafe_allow_html=True)
+    #st.markdown('<p>Secure login to access your internal AI chatbot.</p>', unsafe_allow_html=True)
+    st.markdown("")
+    st.markdown("")
 
     username = st.text_input("👤 Username", placeholder="e.g. tony_sharma")
     password = st.text_input("🔐 Password", type="password", placeholder="Your secret code")

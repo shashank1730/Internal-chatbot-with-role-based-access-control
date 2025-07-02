@@ -68,6 +68,11 @@ if "user" in st.session_state:
     st.sidebar.markdown(f"**Logged in as:** `{st.session_state.user['user']}`")
     st.sidebar.markdown(f"**Role:** `{st.session_state.user['role']}`")
 
+    # 🚪 Logout button
+    if st.sidebar.button("Logout"):
+        st.session_state.clear()
+        st.rerun()
+
     st.title("📁 Role-based File Chat Assistant")
     st.markdown("Ask anything about your files. The assistant will fetch the relevant information based on your role access.")
 
