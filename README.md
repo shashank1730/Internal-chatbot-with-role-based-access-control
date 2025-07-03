@@ -156,7 +156,7 @@ streamlit run Streamlit_app.py
 ## 🎥 Demo Preview
 
 <p align="center">
-  <img src="https://github.com/YOUR_USERNAME/YOUR_REPO/blob/main/demo.gif" width="700"/>
+  <img src=" https://shorturl.at/ZMALf" width="700"/>
 </p>
 
 > Full walkthrough [📽️ on YouTube](https://youtu.be/your-video-link)
