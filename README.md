@@ -159,7 +159,7 @@ streamlit run Streamlit_app.py
   <img src=" https://shorturl.at/ZMALf" width="700"/>
 </p>
 
-> Full walkthrough [📽️ on YouTube](https://youtu.be/your-video-link)
+> Full walkthrough [📽️ on YouTube](https://shorturl.at/ZMALf)
 
 ---
 
